@@ -1,0 +1,77 @@
+.header {
+  display: flex;
+  flex-direction: column;
+
+  &__section {
+    width: 100%;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: var(--color-dark-miny);
+    font-size: var(--fs-xs);
+  }
+
+  &__container {
+    width: 75rem; // 1200px
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__list {
+    display: flex;
+    gap: 0.625rem; // 10px
+  }
+
+  &__item,
+  &__user {
+    display: flex;
+    align-items: center;
+    gap: 0.313rem;
+  }
+
+  &__icon {
+    width: 0.875rem;
+    height: 0.875rem;
+  }
+
+  &__link,
+  &__text {
+    color: var(--color-white);
+  }
+
+  &__dot {
+    color: var(--color-red);
+  }
+
+  &__title {
+    width: 100%;
+    height: 6.25rem;
+    display: flex;
+    justify-content: center;
+    background: var(--color-blue-black);
+    border-bottom: 2px solid var(--color-red);
+  }
+
+  &__heading {
+    width: 75rem;
+    display: flex;
+    align-items: center;
+  }
+
+  &__navigation {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    border-bottom: 2px solid var(--color-light-gray);
+  }
+
+  &__navList {
+    width: 75rem;
+    height: 2.875rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1.125rem;
+  }
+}
