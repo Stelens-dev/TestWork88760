@@ -11,13 +11,13 @@ import { ApiResponse, ProductI } from "./external/interface";
 import useStore from "@/stores/useStore";
 import { User } from "@/stores/interface";
 
-const LoadingMessage = () => (
+const LoadingMessage: React.FC = () => (
   <div className={style.products__loading}>
     <p className={style.products__loading_text}>Loading ...</p>
   </div>
 );
 
-const ErrorMessage = () => (
+const ErrorMessage: React.FC = () => (
   <div className={style.products__loading_err}>
     <p className={style.products__loading_textErr}>
       There was a loading error,
@@ -32,7 +32,7 @@ interface ProductListI {
   user: User | null;
 }
 
-const ProductList = ({ products, user }: ProductListI) => (
+const ProductList: React.FC<ProductListI> = ({ products, user }) => (
   <div className={style.products__list}>
     {products.map((product) => (
       <div key={product.id} className={style.products__card}>
@@ -66,8 +66,8 @@ const Home: NextPage = () => {
       try {
         const data: ApiResponse = await fetchExternalData();
         setProducts(data.products);
-      } catch {
-        console.error("Failed to fetch external data");
+      } catch (error) {
+        console.error("Failed to fetch external data", error);
       } finally {
         setLoading(false);
       }

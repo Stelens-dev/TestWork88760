@@ -8,6 +8,13 @@ import Footer from "@/components/Footer/Footer";
 import axios from "axios";
 import useStore from "@/stores/useStore";
 
+interface ApiResponse {
+  token: string;
+  name: string;
+  surname: string;
+  email: string;
+}
+
 const ERROR_MESSAGES = {
   REQUIRED: "Username and password are required.",
   USERNAME_LENGTH: "Username must be at least 3 characters long.",
@@ -15,13 +22,13 @@ const ERROR_MESSAGES = {
   INVALID_CREDENTIALS: "Invalid username or password",
 };
 
-const Login = () => {
+const Login: React.FC = () => {
   const router = useRouter();
   const { setUser, setError, error } = useStore();
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
 
-  const validateData = () => {
+  const validateData = (): string | null => {
     if (!username || !password) {
       return ERROR_MESSAGES.REQUIRED;
     }
@@ -49,10 +56,11 @@ const Login = () => {
     }
 
     try {
-      const response = await axios.post("/api/auth/login", {
+      const response = await axios.post<ApiResponse>("/api/auth/login", {
         username,
         password,
       });
+
       const { token, name, surname, email } = response.data;
 
       // Saving the token

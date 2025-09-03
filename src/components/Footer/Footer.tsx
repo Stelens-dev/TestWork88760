@@ -2,8 +2,9 @@ import React from "react";
 import useStore from "@/stores/useStore";
 import style from "./Footer.module.scss";
 
-const Footer = () => {
+const Footer: React.FC = () => {
   const { user, currentYear } = useStore();
+  console.log(user);
 
   return (
     <footer className={style.footer}>

@@ -87,3 +87,4 @@ const NavItem: NavItemI[] = [
 ];
 
 export { Items, NavItem };
+export type { ItemsI, NavItemI };

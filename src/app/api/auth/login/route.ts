@@ -2,12 +2,21 @@ import { NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 
-const users = [
-  /* 
-    Emulate a database
-    username: "TEfVzqMoE" password: TE*VzqMlE~c*oU|vq%6iGb@8
-    username: "Ekoq6as"   password: Ekoq6as%d1Q|X|WQT0LB{~IL
-  */
+interface User {
+  id: number;
+  username: string;
+  name: string;
+  surname: string;
+  email: string;
+  password: string;
+}
+
+/*
+  Emulate a database of users
+  username: "TEfVzqMoE" password: TE*VzqMlE~c*oU|vq%6iGb@8
+  username: "Ekoq6as"   password: Ekoq6as%d1Q|X|WQT0LB{~IL
+*/
+const users: User[] = [
   {
     id: 1,
     username: "TEfVzqMoE",
@@ -26,8 +35,13 @@ const users = [
   },
 ];
 
+interface LoginRequest {
+  username: string;
+  password: string;
+}
+
 export const POST = async (req: Request) => {
-  const { username, password } = await req.json();
+  const { username, password }: LoginRequest = await req.json();
 
   // Find user
   const user = users.find((user) => user.username === username);
@@ -54,5 +68,10 @@ export const POST = async (req: Request) => {
     { expiresIn: "1h" },
   );
 
-  return NextResponse.json({ token, name: user.name, surname: user.surname });
+  return NextResponse.json({
+    token,
+    name: user.name,
+    surname: user.surname,
+    email: user.email,
+  });
 };
