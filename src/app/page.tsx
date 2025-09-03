@@ -7,8 +7,55 @@ import Header from "@/components/Header/Header";
 import Footer from "@/components/Footer/Footer";
 import { fetchExternalData } from "@/app/external/externalRequest";
 import { useEffect } from "react";
-import { ApiResponse } from "./external/interface";
+import { ApiResponse, ProductI } from "./external/interface";
 import useStore from "@/stores/useStore";
+import { User } from "@/stores/interface";
+
+const LoadingMessage = () => (
+  <div className={style.products__loading}>
+    <p className={style.products__loading_text}>Loading ...</p>
+  </div>
+);
+
+const ErrorMessage = () => (
+  <div className={style.products__loading_err}>
+    <p className={style.products__loading_textErr}>
+      There was a loading error,
+      <br />
+      please visit this page later...
+    </p>
+  </div>
+);
+
+interface ProductListI {
+  products: ProductI[];
+  user: User | null;
+}
+
+const ProductList = ({ products, user }: ProductListI) => (
+  <div className={style.products__list}>
+    {products.map((product) => (
+      <div key={product.id} className={style.products__card}>
+        <Image
+          className={style.products__image}
+          width={250}
+          height={250}
+          src={product.images[0]}
+          alt={product.title}
+          priority
+        />
+        <div className={style.products__info}>
+          <h4 className={style.products__name}>{product.title}</h4>
+          <p className={style.products__category}>{product.category}</p>
+          <p className={style.products__price}>${product.price.toFixed(2)}</p>
+          {user && (
+            <button className={style.products__addProduct}>Add to cart</button>
+          )}
+        </div>
+      </div>
+    ))}
+  </div>
+);
 
 const Home: NextPage = () => {
   const { setProducts, setLoading, loading, products, user } = useStore();
@@ -37,38 +84,11 @@ const Home: NextPage = () => {
           <h2 className={style.products__title}>Latest Products</h2>
         </div>
         {loading ? (
-          <div className={style.products__loading}>
-            <p className={style.products__loading_text}>Loading ...</p>
-          </div>
+          <LoadingMessage />
+        ) : products.length > 0 ? (
+          <ProductList products={products} user={user} />
         ) : (
-          <div className={style.products__list}>
-            {products.map((product) => (
-              <div key={product.id} className={style.products__card}>
-                <Image
-                  className={style.products__image}
-                  width={250}
-                  height={250}
-                  src={product.images[0]}
-                  alt={product.title}
-                  priority
-                />
-                <div className={style.products__info}>
-                  <h4 className={style.products__name}>{product.title}</h4>
-                  <p className={style.products__category}>{product.category}</p>
-                  <p className={style.products__price}>
-                    ${product.price.toFixed(2)}
-                  </p>
-                  {user ? (
-                    <button className={style.products__addProduct}>
-                      Add to cart
-                    </button>
-                  ) : (
-                    <></>
-                  )}
-                </div>
-              </div>
-            ))}
-          </div>
+          <ErrorMessage />
         )}
       </section>
       <Footer />

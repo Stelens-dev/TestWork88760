@@ -20,7 +20,33 @@ const Header = () => {
   };
 
   const toggleButton = () => {
-    setActive(!isActive);
+    setActive((prev) => !prev);
+  };
+
+  const renderUserSection = () => {
+    return Items.slice(3).map((e) => (
+      <div className={style.header__user} key={e.id}>
+        {name && surname ? (
+          <>
+            <a className={style.header__link} href={e.href!} onClick={userExit}>
+              Logout
+            </a>
+            <Image className={style.header__icon} src={e.src} alt={e.imgAlt} />
+            <div className={style.header__link}>
+              <span className={style.header__name}>{name}</span>
+              <span className={style.header__surname}>{surname}</span>
+            </div>
+          </>
+        ) : (
+          <>
+            <Image className={style.header__icon} src={e.src} alt={e.imgAlt} />
+            <a className={style.header__link} href={e.href!}>
+              {e.text}
+            </a>
+          </>
+        )}
+      </div>
+    ));
   };
 
   return (
@@ -34,7 +60,7 @@ const Header = () => {
             className={style.header__button}
             aria-pressed={isActive ? "true" : "false"}
             type="button"
-            onClick={() => toggleButton()}
+            onClick={toggleButton}
           >
             <span className={style.header__containerBurgerIcon}>
               <span className={style.header__burgerIcon} />
@@ -61,39 +87,7 @@ const Header = () => {
               </li>
             ))}
           </ul>
-          {name && surname
-            ? Items.slice(3).map((e) => (
-                <div className={style.header__user} key={e.id}>
-                  <a
-                    className={style.header__link}
-                    href={e.href!}
-                    onClick={userExit}
-                  >
-                    Logout
-                  </a>
-                  <Image
-                    className={style.header__icon}
-                    src={e.src}
-                    alt={e.imgAlt}
-                  />
-                  <div className={style.header__link}>
-                    <span className={style.header__name}>{name}</span>
-                    <span className={style.header__surname}>{surname}</span>
-                  </div>
-                </div>
-              ))
-            : Items.slice(3).map((e) => (
-                <div className={style.header__user} key={e.id}>
-                  <Image
-                    className={style.header__icon}
-                    src={e.src}
-                    alt={e.imgAlt}
-                  />
-                  <a className={style.header__link} href={e.href!}>
-                    {e.text}
-                  </a>
-                </div>
-              ))}
+          {renderUserSection()}
         </div>
       </section>
       <section className={style.header__title}>

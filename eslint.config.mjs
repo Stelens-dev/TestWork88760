@@ -1,5 +1,5 @@
 import { defineConfig } from "eslint/config";
-import { globalIgnores } from "eslint/config"
+import { globalIgnores } from "eslint/config";
 import js from "@eslint/js";
 import globals from "globals";
 import tseslint from "typescript-eslint";
@@ -16,13 +16,18 @@ export default defineConfig([
       js.configs.recommended,
       pluginPrettier,
     ],
-    ignores: [".next", "eslint.config.mjs", "next-env.d.ts", "src/stores/useStore.ts"],
+    ignores: [
+      ".next",
+      "eslint.config.mjs",
+      "next-env.d.ts",
+      "src/stores/useStore.ts",
+    ],
     languageOptions: {
       ecmaVersion: "latest",
       globals: {
         ...globals.browser,
         process: "readonly",
-        React: "readonly"
+        React: "readonly",
       },
     },
     plugins: {

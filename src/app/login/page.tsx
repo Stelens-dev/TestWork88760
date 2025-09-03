@@ -8,6 +8,13 @@ import Footer from "@/components/Footer/Footer";
 import axios from "axios";
 import useStore from "@/stores/useStore";
 
+const ERROR_MESSAGES = {
+  REQUIRED: "Username and password are required.",
+  USERNAME_LENGTH: "Username must be at least 3 characters long.",
+  PASSWORD_LENGTH: "Password must be at least 6 characters long.",
+  INVALID_CREDENTIALS: "Invalid username or password",
+};
+
 const Login = () => {
   const router = useRouter();
   const { setUser, setError, error } = useStore();
@@ -16,15 +23,19 @@ const Login = () => {
 
   const validateData = () => {
     if (!username || !password) {
-      return "Username and password are required.";
+      return ERROR_MESSAGES.REQUIRED;
     }
     if (username.length < 3) {
-      return "Username must be at least 3 characters long.";
+      return ERROR_MESSAGES.USERNAME_LENGTH;
     }
     if (password.length < 6) {
-      return "Password must be at least 6 characters long.";
+      return ERROR_MESSAGES.PASSWORD_LENGTH;
     }
     return null;
+  };
+
+  const handleLoginError = (message: string) => {
+    setError(message);
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -33,7 +44,7 @@ const Login = () => {
 
     const validationError = validateData();
     if (validationError) {
-      setError(validationError);
+      handleLoginError(validationError);
       return;
     }
 
@@ -46,10 +57,9 @@ const Login = () => {
 
       // Saving the token
       setUser({ token, name, surname, email });
-
       router.push("/");
     } catch {
-      setError("Invalid username or password");
+      handleLoginError(ERROR_MESSAGES.INVALID_CREDENTIALS);
     }
   };
 

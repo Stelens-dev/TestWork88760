@@ -2,13 +2,7 @@
 import { ProductI } from "@/app/external/interface";
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
-
-interface User {
-  token: string | null;
-  name: string | null;
-  surname: string | null;
-  email: string | null;
-}
+import { User } from "./interface";
 
 interface Store {
   products: ProductI[];

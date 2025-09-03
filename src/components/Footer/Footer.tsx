@@ -8,7 +8,9 @@ const Footer = () => {
   return (
     <footer className={style.footer}>
       <div className={style.footer__content}>
-        <p className={style.footer__text}>{`Logged as ${user ? user.email : "Guest"}`}</p>
+        <p
+          className={style.footer__text}
+        >{`Logged as ${user ? user.email : "Guest"}`}</p>
         <p className={style.footer__text}>{`Current Year: ${currentYear}`}</p>
       </div>
     </footer>

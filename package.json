@@ -10,7 +10,8 @@
     "lint:fix": "eslint . --fix",
     "lint:css": "stylelint '**/*.scss'",
     "lint:css:fix": "stylelint '**/*.scss' --fix",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "code:check": "npm run format ; npm run lint:css ; npm run lint"
   },
   "dependencies": {
     "axios": "^1.11.0",
