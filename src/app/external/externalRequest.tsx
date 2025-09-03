@@ -3,7 +3,9 @@ import { ApiResponse } from "./interface";
 
 export const fetchExternalData = async (): Promise<ApiResponse> => {
   try {
-    const response = await axios.get<ApiResponse>("https://dummyjson.com/products/category/smartphones");
+    const response = await axios.get<ApiResponse>(
+      "https://dummyjson.com/products/category/smartphones",
+    );
     return response.data;
   } catch (error: unknown) {
     if (error instanceof Error) {

@@ -5,7 +5,7 @@ import "./globals.scss";
 const poppins = Poppins({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
-  display: "swap"
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -13,12 +13,12 @@ export const metadata: Metadata = {
   description: "Testwork88760 for Abelohost",
 };
 
-export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+export default function RootLayout({
+  children,
+}: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
-      <body className={poppins.className}>
-        {children}
-      </body>
+      <body className={poppins.className}>{children}</body>
     </html>
   );
 }

@@ -8,16 +8,21 @@
     padding: 1.875rem 0 0.625rem;
     color: var(--color-blue-dark);
   }
-  
-  &__loading {
+
+  &__loading_text {
+    display: flex;
+    align-items: center;
     font-size: var(--fs-lg);
     padding: 1.875rem 0;
+    height: 71.5vh;
   }
 
   &__list {
+    min-height: 71.5vh;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 5px;
+    padding-bottom: 30px;
   }
 
   &__image {
@@ -28,7 +33,7 @@
 
   &__card {
     width: 24.688rem;
-    height: 21.563rem;
+    height: 23rem;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -54,5 +59,51 @@
 
   &__price {
     color: var(--color-red);
+  }
+
+  &__addProduct {
+    border: 1px solid var(--color-black);
+    border-radius: 5px;
+    padding: 3px;
+    cursor: pointer;
+  }
+}
+
+@media (width <= 1250px) {
+  .products {
+    &__header {
+      width: 100%;
+      padding: 0 20px;
+    }
+
+    &__title {
+      width: auto;
+    }
+
+    &__list {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+}
+
+@media (width <= 850px) {
+  .products {
+    &__list {
+      grid-template-columns: 1fr;
+    }
+  }
+}
+
+@media (width <= 450px) {
+  .products {
+    &__list {
+      width: 100%;
+      padding: 0 20px 30px;
+      grid-template-columns: 1fr;
+    }
+
+    &__card {
+      width: auto;
+    }
   }
 }

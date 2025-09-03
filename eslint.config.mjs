@@ -1,4 +1,5 @@
 import { defineConfig } from "eslint/config";
+import { globalIgnores } from "eslint/config"
 import js from "@eslint/js";
 import globals from "globals";
 import tseslint from "typescript-eslint";
@@ -7,6 +8,7 @@ import eslintNext from "@next/eslint-plugin-next";
 import stylistic from "@stylistic/eslint-plugin";
 
 export default defineConfig([
+  globalIgnores([".next"]),
   {
     files: ["**/*.{ts,tsx}"],
     extends: [
@@ -14,10 +16,14 @@ export default defineConfig([
       js.configs.recommended,
       pluginPrettier,
     ],
-    ignores: [".next", "eslint.config.mjs", "next-env.d.ts"],
+    ignores: [".next", "eslint.config.mjs", "next-env.d.ts", "src/stores/useStore.ts"],
     languageOptions: {
       ecmaVersion: "latest",
-      globals: globals.browser,
+      globals: {
+        ...globals.browser,
+        process: "readonly",
+        React: "readonly"
+      },
     },
     plugins: {
       "@next/next": eslintNext,

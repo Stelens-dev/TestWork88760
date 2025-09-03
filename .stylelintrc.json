@@ -4,12 +4,7 @@
     "at-rule-no-unknown": [
       true,
       {
-        "ignoreAtRules": [
-          "include",
-          "mixin",
-          "extend",
-          "content"
-        ]
+        "ignoreAtRules": ["include", "mixin", "extend", "content"]
       }
     ],
     "block-no-empty": true,
@@ -17,26 +12,20 @@
     "declaration-block-no-duplicate-properties": [
       true,
       {
-        "ignore": [
-          "consecutive-duplicates"
-        ]
+        "ignore": ["consecutive-duplicates"]
       }
     ],
     "no-duplicate-selectors": true,
     "property-no-unknown": [
       true,
       {
-        "ignoreProperties": [
-          "composes"
-        ]
+        "ignoreProperties": ["composes"]
       }
     ],
     "selector-pseudo-element-no-unknown": [
       true,
       {
-        "ignorePseudoElements": [
-          "v-deep"
-        ]
+        "ignorePseudoElements": ["v-deep"]
       }
     ],
     "string-no-newline": true,

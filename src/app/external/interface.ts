@@ -1,4 +1,3 @@
-// Define an interface for a product
 interface ProductI {
   id: number;
   title: string;
@@ -9,7 +8,6 @@ interface ProductI {
   images: string[];
 }
 
-// Define an interface for the API response
 interface ApiResponse {
   products: ProductI[];
   total: number;

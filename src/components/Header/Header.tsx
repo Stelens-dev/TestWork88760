@@ -1,44 +1,116 @@
-import React from "react";
+import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 import style from "./Header.module.scss";
 import Image from "next/image";
-import Items from "./Items";
+import { Items, NavItem } from "./Items";
+import Link from "next/link";
+import useStore from "@/stores/useStore";
 
 const Header = () => {
+  const router = useRouter();
+  const { user, clearUser } = useStore();
+  const [isActive, setActive] = useState(false);
+  const name = user?.name;
+  const surname = user?.surname;
+
+  const userExit = () => {
+    clearUser();
+    alert("You have been logged out...");
+    router.push("/login");
+  };
+
+  const toggleButton = () => {
+    setActive(!isActive);
+  };
+
   return (
     <header className={style.header}>
-      <section className={style.header__section}>
+      <section
+        className={style.header__section}
+        data-nav-open={isActive ? "true" : "false"}
+      >
         <div className={style.header__container}>
+          <button
+            className={style.header__button}
+            aria-pressed={isActive ? "true" : "false"}
+            type="button"
+            onClick={() => toggleButton()}
+          >
+            <span className={style.header__containerBurgerIcon}>
+              <span className={style.header__burgerIcon} />
+              <span className={style.header__burgerIcon} />
+              <span className={style.header__burgerIcon} />
+            </span>
+          </button>
           <ul className={style.header__list}>
             {Items.slice(0, 3).map((e) => (
               <li className={style.header__item} key={e.id}>
-                <Image className={style.header__icon} src={e.src} alt={e.imgAlt} />
+                <Image
+                  className={style.header__icon}
+                  src={e.src}
+                  alt={e.imgAlt}
+                />
                 <span className={style.header__text}>{e.text}</span>
               </li>
             ))}
           </ul>
-          {Items.slice(3).map((e) => (
-            <div className={style.header__user} key={e.id}>
-              <Image className={style.header__icon} src={e.src} alt={e.imgAlt} />
-              <a className={style.header__link} href={e.href!}>{e.text}</a>
-            </div>
-          ))}
+          <ul className={style.header__navList_menu}>
+            {NavItem.map((e) => (
+              <li className={style.header__navItem_menu} key={e.id}>
+                {e.text}
+              </li>
+            ))}
+          </ul>
+          {name && surname
+            ? Items.slice(3).map((e) => (
+                <div className={style.header__user} key={e.id}>
+                  <a
+                    className={style.header__link}
+                    href={e.href!}
+                    onClick={userExit}
+                  >
+                    Logout
+                  </a>
+                  <Image
+                    className={style.header__icon}
+                    src={e.src}
+                    alt={e.imgAlt}
+                  />
+                  <div className={style.header__link}>
+                    <span className={style.header__name}>{name}</span>
+                    <span className={style.header__surname}>{surname}</span>
+                  </div>
+                </div>
+              ))
+            : Items.slice(3).map((e) => (
+                <div className={style.header__user} key={e.id}>
+                  <Image
+                    className={style.header__icon}
+                    src={e.src}
+                    alt={e.imgAlt}
+                  />
+                  <a className={style.header__link} href={e.href!}>
+                    {e.text}
+                  </a>
+                </div>
+              ))}
         </div>
       </section>
       <section className={style.header__title}>
         <h1 className={style.header__heading}>
-          <span className={style.header__text}>Abelohost Shop</span>
-          <span className={style.header__dot}>.</span>
+          <Link href={"/"}>
+            <span className={style.header__text}>Abelohost Shop</span>
+            <span className={style.header__dot}>.</span>
+          </Link>
         </h1>
       </section>
       <nav className={style.header__navigation}>
         <ul className={style.header__navList}>
-          <li className={style.header__navItem}>Home</li>
-          <li className={style.header__navItem}>Hot Deals</li>
-          <li className={style.header__navItem}>Categories</li>
-          <li className={style.header__navItem}>Laptops</li>
-          <li className={style.header__navItem}>Smartphones</li>
-          <li className={style.header__navItem}>Cameras</li>
-          <li className={style.header__navItem}>Accessories</li>
+          {NavItem.map((e) => (
+            <li className={style.header__navItem} key={e.id}>
+              {e.text}
+            </li>
+          ))}
         </ul>
       </nav>
     </header>
